@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+			margin:  0;
+		}
+		.currect {
+			border-color: #9def85;
+		}
+		.error {
+			border-color: red;
+		}
+		.flt {
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<div class="wapper" id="wapper">
+		<div id="container">
+			<form id="formNode">
+				<div><input type="text" name="userName" placeholder="用户名"></div>
+				<div><input type="password" name="password" placeholder="密码"></div>
+				<div><input type="password" name="repassword" placeholder="重复输入密码"></div>
+				<div><input type="text" name="phoneNumber" placeholder="手机号码"></div>
+				<div><input type="text" name="smsCode" placeholder="短信验证码"></div>
+				<input type="submit" value="提交">
+			</form>
+			<div id="result"><p>执行结果:</p></div>
+		</div>
+	</div>
+	<script src="zepto.js"></script>
+	<script>
+		var validateConfiguration, validate;
+		var define = function(fn) {
+            validateConfiguration = fn();
+		};
+	</script>
+	<script src="validate.js"></script>
+	<script>
+        validate = validateConfiguration.validate;
+
+		//配置全局验证成功和失败的处理方法
+        validateConfiguration.addInputRecalls({
+            inputSuccess: function(dom) {
+				dom.addClass('currect').removeClass('error');
+            },
+            inputFail: function (dom, error) {
+				dom.removeClass('currect').addClass('error');
+				alert(error);
+            }
+        });
+
+		$(function () {
+			new validate('#formNode', {
+                userName: {
+					check: function (s) {
+                        if (!/^[^\s]{6,10}$/i.test(s))
+                            return '请输入6-10位账号';
+
+                        return true;
+                    }
+				},
+                password: 'password',
+				repassword: {
+                    check: function (s, formData) {
+						if (s !== formData.password)
+						    return '您输入的两次密码不一致';
+
+						return true;
+                    }
+				},
+                phoneNumber: 'mobile',
+                smsCode: 'smscode'
+			}, function (formData) {
+			    var pNode;
+				for (var i in formData) {
+				    pNode = $('<p>' + i + ':' + formData[i] + '</p>');
+				    $('#result').append(pNode);
+				}
+            });
+		});
+	</script>
+</body>
+</html>
