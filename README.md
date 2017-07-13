@@ -1,8 +1,8 @@
 ---
-#表单验证插件
+# 表单验证插件
 -------------
 
-#####使用注意
+#### 使用注意
 1. 本插件依赖zepto或者jQuery
 2. 插件内部已经提供了常见的验证方法，您也可以自行扩展验证列表。
 3. 请使用form构建表单节点，通过submit按钮触发提交事件，本插件会拦截掉默认的提交事件，通过callback返回通过验证的数据。
@@ -47,7 +47,7 @@ validateConfiguration.addValidateError({
 validate(form, {}, callback); //接收三个参数 form对象，验证规则，成功回调
 ```
 
-####示例：
+#### 示例：
 ```javascript
 new validate('#formNode', {
 	userName: {
@@ -74,7 +74,7 @@ new validate('#formNode', {
 });
 ```
 
-####验证规则说明：
+#### 验证规则说明：
 请使用Input的name值作为Object的key值
 ```javascript
 {
